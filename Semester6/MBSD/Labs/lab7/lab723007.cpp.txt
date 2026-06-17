@@ -1,0 +1,100 @@
+﻿/*
+ * lab7ex.c
+ *
+ * Created: 3/24/2026 8:44:52 PM
+ * Author : T480
+ */ 
+
+
+
+#define F_CPU 1000000UL
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+void _LCDClear(void);
+void _LCDFunctSet(void);
+void _LCD_DispCtrl(void);
+void _LCDEntryMod(void);
+void _PrintChar(char k);
+
+int main(void)
+{
+	DDRA = 0xFF;
+	DDRE = 0xFF;
+
+	_LCDFunctSet();
+	_LCD_DispCtrl();
+	_LCDEntryMod();
+	_LCDClear();
+
+	while(1)
+	{
+		char k = 'a';
+
+		for(int i = 0; i < 5; i++)
+		{
+			_PrintChar(k);
+			_delay_ms(500);
+			k++;
+		}
+
+		_delay_ms(2000);
+		_LCDClear();
+	}
+}
+
+void _LCDClear(void)
+{
+	PORTA = 0x01;
+	PORTE = 0x00;
+	_delay_ms(10);
+	PORTE = 0x01;
+	_delay_ms(5);
+	PORTE = 0x00;
+}
+
+void _LCDFunctSet(void)
+{
+	PORTA = 0x38;
+	PORTE = 0x00;
+	_delay_ms(10);
+	PORTE = 0x01;
+	_delay_ms(5);
+	PORTE = 0x00;
+}
+
+void _LCD_DispCtrl(void)
+{
+	PORTA = 0x0F;
+	PORTE = 0x00;
+	_delay_ms(10);
+	PORTE = 0x01;
+	_delay_ms(5);
+	PORTE = 0x00;
+}
+
+void _LCDEntryMod(void)
+{
+	PORTA = 0x06;
+	PORTE = 0x00;
+	_delay_ms(10);
+	PORTE = 0x01;
+	_delay_ms(5);
+	PORTE = 0x00;
+}
+
+void _PrintChar(char K)
+{
+	PORTA = K;  
+
+	PORTE |= (1 << PE1);   
+	PORTE &= ~(1 << PE2);  
+
+	
+	PORTE &= ~(1 << PE0);
+	_delay_ms(1);
+	PORTE |= (1 << PE0);
+	_delay_ms(1);
+	PORTE &= ~(1 << PE0);
+}

@@ -1,0 +1,103 @@
+#define F_CPU 8000000UL
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+char data;
+
+void USART0_Init(void)
+{
+    // Baud Rate = 9600
+    // UBRR = (F_CPU / (16*BAUD)) - 1
+    // UBRR = 51 for 8MHz
+
+    UBRR0H = 0;
+    UBRR0L = 51;
+
+    // Enable Receiver and Transmitter
+    UCSR0B = (1<<RXEN0) | (1<<TXEN0);
+
+    // Enable USART Receive Interrupt
+    UCSR0B |= (1<<RXCIE0);
+
+    // 8-bit data, 1 stop bit
+    UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
+}
+
+void USART0_Transmit(char c)
+{
+    while(!(UCSR0A & (1<<UDRE0)));
+
+    UDR0 = c;
+}
+
+ISR(USART0_RXC_vect)
+{
+    // Read received character
+    data = UDR0;
+
+    // Echo back received character
+    USART0_Transmit(data);
+
+    // Toggle LED if character is 'A'
+    if(data == 'A')
+    {
+        PORTB ^= (1<<PB0);
+    }
+}
+
+int main(void)
+{
+    // PB0 output
+    DDRB |= (1<<PB0);
+
+    USART0_Init();
+
+    // Enable Global Interrupts
+    sei();
+
+    while(1)
+    {
+        // Main loop empty
+        // USART handled by ISR
+    }
+}
+
+___________________________________________________________________________________________________
+
+#define F_CPU 8000000UL
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+void USART0_Init(void)
+{
+    // Baud rate = 9600
+    UBRR0H = 0;
+    UBRR0L = 51;
+
+    // Enable transmitter
+    UCSR0B = (1<<TXEN0);
+
+    // 8-bit data
+    UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
+}
+
+void USART0_Transmit(char c)
+{
+    while(!(UCSR0A & (1<<UDRE0)));
+
+    UDR0 = c;
+}
+
+int main(void)
+{
+    USART0_Init();
+
+    while(1)
+    {
+        USART0_Transmit('A');
+
+        _delay_ms(1000);
+    }
+}
