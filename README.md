@@ -52,7 +52,13 @@ CS-Study-Material
 │   ├── CA
 │   ├── CCN
 │   └── SE
-│
+│__ Semester 6
+│   ├── Arabic
+│   ├── EEM
+│   ├── Machine Learning
+│   ├── MBSD
+│   ├── Numerical Method
+│   └── Operating Systems
 ├── LICENSE
 └── README.md
 ```
