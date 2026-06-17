@@ -2,7 +2,7 @@
 
 ## About the Author
 
-Hi, I'm **Fatima Shahid** — a Computer Science undergraduate, developer, and curious learner who believes that knowledge grows when it is shared.
+Hi, I'm **Fatima Shahid** — a Computer & Information Systems Engineering Undergraduate and curious learner who believes that knowledge grows when it is shared.
 
 Beyond coursework, I enjoy exploring the deeper side of technology: solving problems through programming, writing about ideas and experiences, and building projects that turn concepts into something tangible. My interests span across **software development, algorithms, and system-level thinking**, while I also nurture a creative side through **writing and art**.
 
@@ -104,6 +104,7 @@ This repository aims to:
 * Medium: https://medium.com/@fatimashahid781
 * LeetCode: https://leetcode.com/u/FatimaaShahid/
 * Email: [fatimashahid781@gmail.com](mailto:fatimashahid781@gmail.com)
+* Instagram : https://www.instagram.com/fatimas_abstract/
 
 ---
 
